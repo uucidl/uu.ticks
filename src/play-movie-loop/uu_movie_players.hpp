@@ -494,8 +494,12 @@ uu_movie_players::EnqueueURL (uu_movie_players::Queue* queue, char const* url,
         UU_MOVIE_PLAYERS_TRACE_VALUE (video.pix_fmt, video_codec_context->pix_fmt);
 
         auto output_format = FFMPEG::AV_PIX_FMT_RGBA;
+
+        FFMPEG::AVPixelFormat effective_pix_fmt = video_codec_context->pix_fmt == -1 ? FFMPEG::AV_PIX_FMT_YUV420P : video_codec_context->pix_fmt;
+
         print ("input pixel format: %d\n", video_codec_context->pix_fmt);
-        if (!FFMPEG::sws_isSupportedInput (video_codec_context->pix_fmt)) {
+        print ("effective: %d\n", effective_pix_fmt);
+        if (!FFMPEG::sws_isSupportedInput (effective_pix_fmt)) {
                 print ("sws does not support this pixel format: %d\n",
                        video_codec_context->pix_fmt);
                 return;
