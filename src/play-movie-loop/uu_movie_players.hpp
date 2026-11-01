@@ -503,11 +503,16 @@ uu_movie_players::EnqueueURL (uu_movie_players::Queue* queue, char const* url,
         if (!FFMPEG::sws_isSupportedOutput (output_format)) {
                 print ("sws does not support RGBA\n");
         }
-        auto sws_context = FFMPEG::sws_getContext (video_codec_context->width,
-                           video_codec_context->height,
-                           video_codec_context->pix_fmt,
-                           video_codec_context->width,
-                           video_codec_context->height,
+
+        const auto width = video_codec_context->width ? video_codec_context->width : 1280;
+        const auto height = video_codec_context->height ? video_codec_context->height : 720;
+
+        auto sws_context = FFMPEG::sws_getContext (
+                           width,
+                           height,
+                           effective_pix_fmt,
+                           width,
+                           height,
                            output_format,
                            0,
                            nullptr,
