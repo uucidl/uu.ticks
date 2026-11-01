@@ -441,9 +441,9 @@ uu_movie_players::EnqueueURL (uu_movie_players::Queue* queue, char const* url,
 
         print ("Video codec: ");
         {
-                print (", name: %s", video_codec->name);
+                print ("name: %s", video_codec->name);
                 print (", long_name: %s", video_codec->long_name);
-                print (", capabilities: %d", video_codec->capabilities);
+                print (", capabilities: %#x", video_codec->capabilities);
                 if (video_codec->capabilities & CODEC_CAP_HWACCEL) {
                         print (", hwaccel");
                 }
@@ -457,7 +457,6 @@ uu_movie_players::EnqueueURL (uu_movie_players::Queue* queue, char const* url,
                                 print (", pixel format: %d", *pixel_format);
                         }
                 }
-                print (", next codec: %p", video_codec->next);
                 print ("\n");
         };
 
